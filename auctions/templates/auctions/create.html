@@ -1,0 +1,22 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h1>Create Listings</h1>
+    <div class="form-group" style="margin:20px; padding:50px; margin-left: 50px; margin-right: 50px">
+        <form action="{% url 'create'%}" method="post" enctype="multipart/form-data">
+            {%csrf_token%}
+            {{form.as_p}}
+            <select class="form-select" aria-label="Default select example" name="category" value="category">
+                <option selected>Select category from dropdown menu</option>
+                {% if categories%}
+                {% for category in categories %}
+                <option value="{{category.name}}">{{category.name}}</option>
+                {%endfor%}
+                {%endif%}
+            </select>
+            <br>
+            <button class='btn btn-secondary'>Post</button>
+        </form>
+    </div>
+    
+{% endblock %}

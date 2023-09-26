@@ -1,0 +1,76 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Closed Listings</h2>
+
+    <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class = "container">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "index.html">
+                <img src = "static/auctions/images/shopping-bag-icon.png" alt = "site icon">
+                <span class = "text-uppercase fw-lighter ms-2">Auctions</span>
+            </a>
+            <div class = "order-lg-2 nav-btns">
+                <button type = "button" class = "btn position-relative">
+                    <i class = "fa fa-search"></i>
+                </button>
+            </div>
+    
+            <button class = "navbar-toggler border-0" type = "button" data-bs-toggle = "collapse" data-bs-target = "#navMenu">
+                <span class = "navbar-toggler-icon"></span>
+            </button>
+    
+            <div class = "collapse navbar-collapse order-lg-1" id = "navMenu">
+                <ul class = "navbar-nav mx-auto text-center">
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'index' %}">home</a>
+                    </li>
+                    {%if user.is_authenticated%}
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'logout' %}">logout</a>
+                    </li>
+                    {%else%}
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'login' %}">login</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'register' %}">register</a>
+                    </li>
+                    {%endif%}
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end of navbar -->
+
+    <!-- special products -->
+    <section id = "special" class = "py-5">
+        <div class = "container">
+            <div class = "title text-center py-5">
+                <h2 class = "position-relative d-inline-block">Closed Listings</h2>
+            </div>
+            <div class = "special-list row g-0">
+                {%for list in listing%}
+                {%if empty%}
+                <h4>No Listing</h4>
+                {%endif%}
+                <div class = "col-md-6 col-lg-4 col-xl-3 p-2">
+                    <div class = "special-img position-relative overflow-hidden">
+                        <img src = "{{list.image.url}}"  class = "w-100">
+                        <span class = "position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
+                            <i class = "fas fa-heart"></i>
+                        </span>
+                    </div>
+                    <div class = "text-center">
+                        <p class = "text-capitalize mt-3 mb-1" >{{list.title}}</p>
+                        <span class = "fw-bold d-block">${{list.bid}}</span>
+                        <a href ="{%url 'cdlisting' list.id %}" class = "btn btn-primary mt-3">View Winner</a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+            
+        </div>
+    </section>
+    <!-- end of special products -->
+{%endblock%}

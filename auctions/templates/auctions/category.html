@@ -1,0 +1,30 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings in {{ category }} category:</h2>
+    <div class="container-fluid">
+        {% for item in items_in_category %}
+                <div class="row mt-5">
+                    <div class="col-2">
+                        {% if item.photo %}
+                            <img src="{{ MEDIA_URL }} {{ item.photo.url }}" class="img-fluid">
+                        {% else %}
+                            No photo provided.
+                        {% endif %}
+                    </div>
+                    <div class ="col ms-auto">
+                        <h3><a href="{% url 'listing' item.name %}">{{ item.name }}</a></h3>
+                        {% if item.current_bid.amount %}
+                            <h5>Current Price: ${{ item.current_bid.amount }}</h5>
+                        {% else %}
+                            <h5>Current Price: ${{ item.initial_price }}</h5>
+                        {% endif %}
+                        {% if item.description %}
+                            Description: {{ item.description }} <br>
+                        {% endif %}
+                        Created on {{ item.date_created }}
+                    </div>
+                </div>
+        {% endfor %}
+    </div>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "auctions/templates/auctions/layout.html" %}
+
+{% block body %}
+    <h2>Active Listings</h2>
+    {%for list in lists%}
+    {%if empty%}
+    <h4>No Listing</h4>
+    {%endif%}
+    <div>
+        <ul>
+            <h4><a href="{%url 'listing' list.id %}">{{list.title}}</a></h4>
+            <h4>{{list.bid}}</h4>
+            <h4>{{list.description}}</h4>
+            <h4>{{list.category}}</h4>
+        </ul>
+    </div>
+      
+    {%endfor%} 
+    <a href="{% url 'closed'%}">All Closed Listings</a> 
+{% endblock %}

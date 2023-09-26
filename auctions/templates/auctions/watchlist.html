@@ -1,0 +1,120 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    <nav class = "navbar navbar-expand-lg navbar-light bg-white py-4 fixed-top">
+        <div class = "container">
+            <a class = "navbar-brand d-flex justify-content-between align-items-center order-lg-0" href = "index.html">
+                <img src = "static/auctions/images/shopping-bag-icon.png" alt = "site icon">
+                <span class = "text-uppercase fw-lighter ms-2">Auctions</span>
+            </a>
+            <div class = "order-lg-2 nav-btns">
+                <button type = "button" class = "btn position-relative">
+                    <i class = "fa fa-search"></i>
+                </button>
+            </div>
+
+            <button class = "navbar-toggler border-0" type = "button" data-bs-toggle = "collapse" data-bs-target = "#navMenu">
+                <span class = "navbar-toggler-icon"></span>
+            </button>
+
+            <div class = "collapse navbar-collapse order-lg-1" id = "navMenu">
+                <ul class = "navbar-nav mx-auto text-center">
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'index' %}">home</a>
+                    </li>
+                    <li class = "nav-item px-2 py-2">
+                        <a class = "nav-link text-uppercase text-dark" href = "{% url 'login' %}">login</a>
+                    </li>
+                    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- end of navbar -->
+    <!-- special products -->
+    <section id = "special" class = "py-5">
+        <div class = "container">
+            <div class = "title text-center py-5">
+                <h2 class = "position-relative d-inline-block">Watchlist</h2>
+            </div>
+            <div class = "special-list row g-0">
+                {%for listing in lists%}
+                {%if empty%}
+                <h4>No Listing</h4>
+                {%endif%}
+                <div class = "col-md-6 col-lg-4 col-xl-3 p-2">
+                    <div class = "special-img position-relative overflow-hidden">
+                        <img src = "{{listing.image.url}}"  class = "w-100">
+                        <span class = "position-absolute d-flex align-items-center justify-content-center text-primary fs-4">
+                            <i class = "fas fa-heart"></i>
+                        </span>
+                    </div>
+                    <div class = "text-center">
+                        <p class = "text-capitalize mt-3 mb-1" >{{listing.title}}</p>
+                        <span class = "fw-bold d-block">${{listing.bid}}</span>
+                        <a href ="{%url 'listing' listing.id %}" class = "btn btn-primary mt-3">View Product</a>
+                        <br><br>
+                        <a id="cart" href="{% url 'remove' listing.id %}" type="button" class='btn btn-success'>Remove From Watchlist</a>
+                    </div>
+                </div>
+                {%endfor%}
+            </div>
+             
+        </div>
+    </section>
+    <!-- {%for listing in lists%}
+    <div class="container" style="margin-top:100px" >
+        <div class="row">
+          <div class="col-md-5">
+            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <div class="carousel-item active">
+                    <img src="{{listing.image.url}}" class="d-block w-100" alt="display">
+                  </div>
+                </div>
+              </div>
+          </div>
+          <div class="col-md-7">
+            <p class="newarrival text-center">NEW</p>
+            <h2>{{listing.title}}</h2>
+            <p> Starting Bid is {{listing.bid}}$</p>
+            <p class="price">Price is USD ${{price}}</p>
+            <p><b>Availability:</b> In Stock</p>
+            <p><b>Product ID:</b> {{listing.id}}</p>
+            <p><b>Category:</b> {{listing.category}}</p>
+            <p><b>Description:</b> {{listing.description}}</p>
+            <label>Qunatity:</label>
+            <input  type="text" value="1">
+            <br><br>    
+            {% if user %}
+                <form action="{% url 'bidding' listing.id%}" method="post">
+                    {%csrf_token%}
+                    <input id="inputs" type="integer" name="bid" placeholder="Enter Bid Price">
+                    <button type='submit' class="btn btn-default warning" value="Submit">Bid</button>
+                </form>
+                <div class="container">
+                    {%if messages%}
+                    {% for msg in messages%}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Hey!</strong> {{msg}}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    {%endfor%}
+                    {%endif%}
+                </div>
+                <br>
+                <a id="cart" href="{% url 'remove' listing.id %}" type="button" class='btn btn-success'>Remove From Watchlist</a>
+            {%endif%}
+            {%if bool%}
+            <a href="{% url 'close' listing.id%}" type="button" class='btn btn-default'>Close Bid</a>
+            {%endif%} -->
+
+          <!-- </div> 
+        </div>
+     </div>
+     {%endfor%} -->
+    
+
+
+{%endblock%}
